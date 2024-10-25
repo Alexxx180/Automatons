@@ -1,9 +1,7 @@
 function Clear-LocationPath {
 	Param([Parameter(Mandatory=$true)][string] $location)
 
-	Begin {
-		[string] $delimiter = '/'
-	}
+	Begin { [string] $delimiter = '/' }
 
 	Process {
 		$location = $location -replace '\\', $delimiter

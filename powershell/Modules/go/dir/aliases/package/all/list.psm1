@@ -1,12 +1,12 @@
 function Write-PackagedLocations {
 	Begin {
-		$pack = Get-PackagedLocations
+		$locations = Get-PackagedLocations
 		$dirs = [System.Text.StringBuilder]::new()
 	}
 
 	Process {
-		foreach ($dir in $pack) {
-			$dirs.Append($dir.alias).Append("`t")
+		foreach ($key in $locations.Keys) {
+			$dirs.Append($key).Append("`t")
 		}
 	}
 

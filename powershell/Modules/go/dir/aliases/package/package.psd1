@@ -10,6 +10,7 @@
 		'storage.psm1'
 		'all/clear.psm1'
 		'all/list.psm1'
+		'all/searcher.psm1'
 		'go/register.psm1'
 		'go/move.psm1'
 	)

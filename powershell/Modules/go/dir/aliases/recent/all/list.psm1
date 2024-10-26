@@ -1,10 +1,14 @@
 function Write-RecentLocations {
+	Param([System.Collections.ICollection] $keys)
+
 	Begin { $recent = Get-RecentLocations }
 
 	Process {
-		for ([int] $i = 0; $i -le $recent.Count; $i += 1) {
-			[HashTable] $dir = $recent[$i]
-			Write-Output "$($i + 1).`t$($dir.alias)`t$($dir.location)"
+		if (-not $keys) { $keys = Get-RecentLocationKeys }
+
+		for ([int] $i = 0; $i -le $keys.Count; $i += 1) {
+			[string] $key = $keys[$i]
+			Write-Output "$i.`t$key`t$($recent[$key])"
 		}
 	}
 }

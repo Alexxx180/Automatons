@@ -1,10 +1,9 @@
-function Get-RecentNewLocation { return @{ new = 'Enter new location' } }
-
 function Get-RecentLocations { return $script:recent }
 
+function Get-RecentLocationKeys { return $script:recent.Keys }
+
 function New-RecentLocations {
-	$script:recent = [System.Collections.Generic.List[HashTable]]::new()
-	$script:recent.Add((Get-RecentNewLocation))
+	$script:recent = @{ new = 'Enter new location' }
 }
 
 New-RecentLocations

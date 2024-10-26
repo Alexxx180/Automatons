@@ -5,9 +5,8 @@ function Invoke-LocationOperation {
 	)
 
 	Begin {
-		$dirs = Get-PackagedLocations
-		$assert = Get-AssertLocationTypes
-		[HashTable] $dir = @{ exists = $false; index = $dirs.Length }
+		[HashTable] $locations = Get-PackagedLocations
+		[HashTable] $dir = Get-PackageSearcher
 	}
 
 	Process {
@@ -15,15 +14,22 @@ function Invoke-LocationOperation {
 
 		if ($operations.recent.save) { Clear-RecentLocations }
 
-		while (Assert-Locations $dir $location $assert.directory) {
+		while (Assert-Locations $dir $location) {
 			if ($operations.recent.save) {
-				Add-RecentLocation $dirs[$dir.index] $location
+				Register-RecentLocation $dir.key $location
 			}
 		}
 
 		if ($dir.exists) {
-			return $operations.directory.Invoke($dirs, $dir.index)
+			return $operations.directory.Invoke($locations, $dir.key)
 		}
+
+		# TODO: Delete after completing main use cases
+		$empty = Get-NoLocations
+		if ($empty -eq (Move-ToRecentLocations)) {
+			return Add-NewRecentLocation $location
+		}
+		return $empty
 
 		return $operations.recent.feedback.Invoke($location)
 	}

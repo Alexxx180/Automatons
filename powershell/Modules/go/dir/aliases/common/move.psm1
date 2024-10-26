@@ -1,19 +1,18 @@
-function Move-ToLocationFromList {
+function Move-ToLocationRow {
 	Param(
-		[Parameter(Mandatory=$true)]
-		[System.Collections.Generic.List[HashTable]] $dirs,
-		[Parameter(Mandatory=$true)][int] $no
+		[Parameter(Mandatory=$true)][HashTable] $dirs,
+		[Parameter(Mandatory=$true)][string] $alias
 	)
 
 	Process {
-		[HashTable] $dir = $dirs[$no]
+		[string] $location = $dirs[$alias]
 
-		if (Test-Path $dir.location -PathType Container) {
-			Set-Location $dir.location
-			return "Go to '$($dir.alias)' - '$($dir.location)'"
-		} else {
+		if (Assert-BrokenLocation $location) {
 			$dirs.Remove($dir)
-			return "Break '$($dir.alias)' - '$($dir.location)'"
+			return "Break '$alias' - '$location'"
 		}
+
+		Set-Location $location
+		return "Go to '$alias' - '$location'"
 	}
 }

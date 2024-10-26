@@ -1,9 +1,10 @@
 function Find-AliasByIndex {
 	Param(
 		[Parameter(Mandatory=$true)][HashTable] $searcher,
-		[Parameter(Mandatory=$true)][int] $length,
-		[string] $delimiter
+		[Parameter(Mandatory=$true)][int] $length
 	)
+
+	Begin { [string] $delimiter = '.' }
 
 	Process {
 		if ($searcher.index -ne -1) {
@@ -14,14 +15,11 @@ function Find-AliasByIndex {
 }
 
 function Find-AliasWithinPath {
-	Param(
-		[Parameter(Mandatory=$true)][HashTable] $searcher,
-		[string] $delimiter = ''
-	)
+	Param([Parameter(Mandatory=$true)][HashTable] $searcher)
 
 	Process {
 		$length = $searcher.index
-		$searcher.index = Find-SlashDelimiter $searcher
-		return Find-AliasByIndex $searcher $length $delimiter
+		$searcher.index = Find-PathDelimiter $searcher.location $length
+		return Find-AliasByIndex $searcher $length
 	}
 }

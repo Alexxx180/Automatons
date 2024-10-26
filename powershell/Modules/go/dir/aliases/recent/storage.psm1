@@ -1,9 +1,9 @@
 function Get-RecentLocations { return $script:recent }
 
-function Get-RecentLocationKeys { return $script:recent.Keys }
+function Get-RecentLocationKeys { return ($script:recent.Keys -split "`n") }
 
 function New-RecentLocations {
-	$script:recent = @{ new = 'Enter new location' }
+	$script:recent = @{}
 }
 
 New-RecentLocations

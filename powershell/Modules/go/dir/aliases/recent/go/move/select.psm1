@@ -3,18 +3,23 @@ function Grant-RecentLocations {
 	return $script:rows
 }
 
+function Move-ToRecentLocation {
+	Process {
+		[HashTable] $recent = Get-RecentLocations
+		return Move-ToLocationRow $recent $script:rows
+	}
+}
+
 function Select-RecentLocation {
 	Param(
 		[ValidateScript({
-			($_ -ge 0) -and ($_ -le (Get-RecentLocations).Count)
+			($_ -ge 1) -and ($_ -le (Get-RecentLocations).Count)
 		})]
 		[Parameter(Mandatory=$true)][int] $no
 	)
 
 	Process {
-		if ($no -eq 0) { return New-RecentLocation }
-
 		[HashTable] $recent = Get-RecentLocations
-		return Move-ToLocationRow $recent $script:rows[$no]
+		return Move-ToLocationRow $recent $script:rows[$no - 1]
 	}
 }

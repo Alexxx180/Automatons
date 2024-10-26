@@ -1,3 +1,13 @@
+function Save-RecentLocation {
+	Param([HashTable] $operations, [string] $key, [string] $location)
+
+	Process {
+		if ($operations.recent.save) {
+			Register-RecentLocation $dir.key $location
+		}
+	}
+}
+
 function Invoke-LocationOperation {
 	Param(
 		[Parameter(Mandatory=$true)][HashTable] $operations,
@@ -6,31 +16,27 @@ function Invoke-LocationOperation {
 
 	Begin {
 		[HashTable] $locations = Get-PackagedLocations
-		[HashTable] $dir = Get-PackageSearcher
+		[HashTable] $dir = Get-PackageSearcher $locations
 	}
 
 	Process {
+		if ($locations.Contains($location)) {
+			return Move-ToLocationRow $locations $location
+		}
+
 		$location = Clear-LocationPath $location
 
 		if ($operations.recent.save) { Clear-RecentLocations }
 
 		while (Assert-Locations $dir $location) {
-			if ($operations.recent.save) {
-				Register-RecentLocation $dir.key $location
-			}
+			Save-RecentLocation $operations $dir.key $location
 		}
+		Save-RecentLocation $operations $dir.key $location
 
 		if ($dir.exists) {
 			return $operations.directory.Invoke($locations, $dir.key)
 		}
 
-		# TODO: Delete after completing main use cases
-		$empty = Get-NoLocations
-		if ($empty -eq (Move-ToRecentLocations)) {
-			return Add-NewRecentLocation $location
-		}
-		return $empty
-
-		return $operations.recent.feedback.Invoke($location)
+		return $operations.recent.edit.Invoke($location)
 	}
 }

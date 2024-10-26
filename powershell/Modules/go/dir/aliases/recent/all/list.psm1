@@ -8,7 +8,7 @@ function Write-RecentLocations {
 
 		for ([int] $i = 0; $i -le $keys.Count; $i += 1) {
 			[string] $key = $keys[$i]
-			Write-Output "$i.`t$key`t$($recent[$key])"
+			Write-Output "$($i + 1).`t$key`t$($recent[$key])"
 		}
 	}
 }

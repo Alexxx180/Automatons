@@ -11,7 +11,6 @@ function Get-AliasIfAny {
 		[int] $start = $index + 1
 		[int] $word = $length - $start
 		[string] $alias = Step-FirstAlias $start $word $location
-		Write-Host "$start + $word = $alias"
 		return $alias
 	}
 }
@@ -23,7 +22,6 @@ function Step-Alias {
 	)
 
 	Process {
-		Write-Host ("LOC: " + $searcher.location)
 		return Get-AliasIfAny $searcher.index $length $searcher.location
 	}
 }

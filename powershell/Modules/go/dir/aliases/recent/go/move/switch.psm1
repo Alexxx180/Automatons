@@ -6,14 +6,14 @@ function Switch-RecentLocations {
 	Process {
 		if ($new) { return New-RecentLocation }
 
-		if ($recent.Count -le 1) {
+		if ($recent.Count -eq 0) {
 			return Get-NoLocations
 		}
 
 		$rows = Grant-RecentLocations
 
-		if ($recent.Count -eq 2) {
-			return Select-RecentLocation 1
+		if ($recent.Count -eq 1) {
+			return Move-ToRecentLocation
 		}
 
 		Write-RecentLocations $rows
@@ -21,4 +21,4 @@ function Switch-RecentLocations {
 	}
 }
 
-Set-Alias -Name gr -Value Move-ToRecentLocations -Scope Global
+Set-Alias -Name gr -Value Switch-RecentLocations -Scope Global

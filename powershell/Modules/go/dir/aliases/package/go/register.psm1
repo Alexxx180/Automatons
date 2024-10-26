@@ -7,9 +7,11 @@ function Register-PackagedLocation {
 		$alias = Search-ForAlias $location
 		if ($alias -eq $null) { return Get-NoDescription }
 
+		[HashTable] $locations = Get-PackagedLocations
 		[string] $key = $alias.ToString()
-		(Get-PackagedLocations).$key = $location
+		$locations.$key = $location
 
+		Set-Location $locations[$key]
 		return $key
 	}
 }

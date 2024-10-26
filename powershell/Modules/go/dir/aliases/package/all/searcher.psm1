@@ -4,8 +4,8 @@ function Get-PackageSearcher {
 	Process {
 		return @{
 			exists = $false
-			index = $locations.Length
-			keys = $locations.Keys
+			index = $locations.Count
+			keys = $locations.Keys -split "`n"
 			key = ''
 		}
 	}

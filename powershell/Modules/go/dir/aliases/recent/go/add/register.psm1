@@ -10,8 +10,6 @@ function Register-RecentLocation {
 	}
 
 	Process {
-		if ($locations[$key] -like "*$alias*") {
-			$recent.$key = $locations[$key]
-		}
+		if ($key -like "*$alias*") { $recent.$key = $locations[$key] }
 	}
 }

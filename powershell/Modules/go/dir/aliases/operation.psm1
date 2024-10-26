@@ -13,10 +13,12 @@ function Invoke-LocationOperation {
 	Process {
 		$location = Clear-LocationPath $location
 
-		Clear-RecentLocations
+		if ($operations.recent.save) { Clear-RecentLocations }
 
 		while (Assert-Locations $dir $location $assert.directory) {
-			Add-RecentLocation $dirs[$dir.index] $location
+			if ($operations.recent.save) {
+				Add-RecentLocation $dirs[$dir.index] $location
+			}
 		}
 
 		if ($dir.exists) {

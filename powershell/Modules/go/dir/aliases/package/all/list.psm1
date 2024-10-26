@@ -11,4 +11,4 @@ function Write-PackagedLocations {
 	}
 
 	End { return $dirs.ToString() }
-}# /, , ?, *, :, ", <, >, |
+} # /, , ?, *, :, ", <, >, |

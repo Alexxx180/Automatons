@@ -1,17 +1,12 @@
 function Open-Location {
-	Param([Parameter(Mandatory=$true)][string] $command, [string] $location)
+	Param([Parameter(Mandatory=$true)][string] $command)
 
 	Process {
 		if ($command[0] -eq ':') {
-			return Switch-LocationCommands $command.Substring(1, 2) $location
+			return Switch-LocationCommands $command.Substring(1, 2)
 		}
-		if ($location) {
-			
-		} else {
-			
-		}
+		return Move-ToPackagedLocation $command
 	}
-
 }
 
 Set-Alias -Name go -Value Open-Location -Scope Global

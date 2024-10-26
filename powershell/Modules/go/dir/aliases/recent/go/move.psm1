@@ -23,3 +23,5 @@ function Move-ToRecentLocations {
 		return Move-ToRecentLocationByNumber
 	}
 }
+
+Set-Alias -Name gr -Value Move-ToRecentLocations -Scope Global

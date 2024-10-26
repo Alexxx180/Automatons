@@ -3,10 +3,13 @@ $script:operations = @{
 		Param($dirs, [int] $no)
 		Move-ToLocationFromList $dirs $no
 	}
-	recent = {
-		Param([string] $location)
-		if ((Get-NoLocations) -eq (Move-ToRecentLocations)) {
-			Register-PackagedLocation $location
+	recent = @{
+		save = $true,
+		feedback = {
+			Param([string] $location)
+			if ((Get-NoLocations) -eq (Move-ToRecentLocations)) {
+				Register-PackagedLocation $location
+			}
 		}
 	}
 }

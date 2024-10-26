@@ -8,6 +8,7 @@ function Clear-LocationPath {
 		if ($location[-1] -eq $delimiter) {
 			$location = $location.Substring(0, $location.Length - 1)
 		}
-		return $location
 	}
+
+	End { return $location }
 }

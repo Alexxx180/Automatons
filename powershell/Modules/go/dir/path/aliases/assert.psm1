@@ -1,15 +1,15 @@
 function Assert-Locations {
 	Param(
-		[Parameter(Mandatory=$true)][HashTable] $iterator,
+		[Parameter(Mandatory=$true)][HashTable] $dir,
 		[Parameter(Mandatory=$true)][string] $location,
 		[Parameter(Mandatory=$true)][ScriptBlock] $loctype
 	)
 
 	Process {
 		$dirs = Get-PackagedLocations
-		$iterator.exists = $loctype.Invoke($dirs[$i], $location)
-		$iterator.index -= 1
-		return (-not $iterator.exists) -and ($iterator.index -ge 0)
+		$dir.exists = $loctype.Invoke($dirs[$i], $location)
+		$dir.index -= 1
+		return (-not $dir.exists) -and ($dir.index -ge 0)
 	}
 }
 

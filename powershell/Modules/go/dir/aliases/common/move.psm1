@@ -12,7 +12,7 @@ function Move-ToLocationFromList {
 			Set-Location $dir.location
 			return "Go to '$($dir.alias)' - '$($dir.location)'"
 		} else {
-			$dirs.RemoveAt($no)
+			$dirs.Remove($dir)
 			return "Break '$($dir.alias)' - '$($dir.location)'"
 		}
 	}

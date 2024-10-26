@@ -4,7 +4,7 @@ $script:operations = @{
 		Move-ToLocationFromList $dirs $no
 	}
 	recent = @{
-		save = $true,
+		save = $true
 		feedback = {
 			Param([string] $location)
 			if ((Get-NoLocations) -eq (Move-ToRecentLocations)) {

@@ -1,5 +1,4 @@
 @{
-	RootModule = 'package.psm1'
 	ModuleVersion = '1.0'
 	GUID = 'c25afe53-286f-4e81-9266-31a605a41854'
 	Author = 'Tatarintsev Aleksandr'
@@ -8,6 +7,7 @@
 	Description = 'Locations packager module'
 	PowerShellVersion = '5.1'
 	NestedModules = @(
+		'storage.psm1'
 		'all/clear.psm1'
 		'all/list.psm1'
 		'go/register.psm1'

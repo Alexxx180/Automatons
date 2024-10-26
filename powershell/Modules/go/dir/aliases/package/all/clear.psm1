@@ -1,7 +1,10 @@
 function Clear-PackagedLocations {
 	Begin { $dirs = Get-PackagedLocations }
 
-	Process { $dir.Clear() }
+	Process {
+		$dirs.Clear()
+		$dirs.Add((Get-RootPackagedLocation))
+	}
 
 	End { return 'Locations cleared' }
 }

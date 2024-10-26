@@ -1,5 +1,4 @@
 @{
-	RootModule = 'recent.psm1'
 	ModuleVersion = '1.0'
 	GUID = '51ac8801-e4b6-4761-a182-ff52a592b81d'
 	Author = 'Tatarintsev Aleksandr'
@@ -8,6 +7,7 @@
 	Description = 'Recent locations module'
 	PowerShellVersion = '5.1'
 	NestedModules = @(
+		'storage.psm1'
 		'all/clear.psm1'
 		'all/list.psm1'
 		'go/register.psm1'

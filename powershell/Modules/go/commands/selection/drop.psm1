@@ -3,6 +3,7 @@ function Get-DropLocations { return $script:operations }
 $script:operations = @{
 	directory = {
 		Param($dirs, [int] $no)
+		if ($no -eq 0) { return "Can't remove root location" }
 		[HashTable] $dir = $dirs[$no]
 		$dirs.Remove($dir)
 		return "Removed '$($dir.alias)' - '$($dir.location)'"

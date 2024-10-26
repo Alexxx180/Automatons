@@ -1,7 +1,7 @@
 function Step-Alias {
 	Param(
 		[Parameter(Mandatory=$true)][HashTable] $searcher,
-		[Parameter(Mandatory=$true)][int] $length,
+		[Parameter(Mandatory=$true)][int] $length
 	)
 
 	Process {

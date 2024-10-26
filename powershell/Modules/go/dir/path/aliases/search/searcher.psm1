@@ -3,8 +3,8 @@ function Get-AliasSearcher {
 
 	Process {
 		return @{
-			[string] location = $location
-			[int] index = $location.Length
+			location = $location
+			index = $location.Length
 			alias = [System.Text.StringBuilder]::new()
 		}
 	}

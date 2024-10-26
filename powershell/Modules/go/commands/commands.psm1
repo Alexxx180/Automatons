@@ -1,20 +1,20 @@
 function Get-LocationCommands { return $script:commands }
 
 [HashTable] $script:commands = @{
-	[ScriptBlock] h = { return Get-LocationCommandsHelp }
+	h = { return Get-LocationCommandsHelp }
 	source = @{
-		[ScriptBlock] c = { return Get-Clipboard }
+		c = { return Get-Clipboard }
 	}
 	all = @{
-		[ScriptBlock] r = { return Clear-PackagedLocations }
-		[ScriptBlock] l = { return Write-PackagedLocations }
+		r = { return Clear-PackagedLocations }
+		l = { return Write-PackagedLocations }
 	}
 	selection = @{
-		[ScriptBlock] d = {
+		d = {
 			Param([string] $alias)
 			Invoke-LocationOperation (Get-DropLocations) $alias
 		}
-		[ScriptBlock] y = {
+		y = {
 			Param([string] $alias)
 			Invoke-LocationOperation (Get-YankLocations) $alias
 		}

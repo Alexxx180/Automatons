@@ -25,6 +25,6 @@ function Invoke-LocationOperation {
 			return $operations.directory.Invoke($dirs, $dir.index)
 		}
 
-		return $operations.recent.Invoke()
+		return $operations.recent.feedback.Invoke($location)
 	}
 }

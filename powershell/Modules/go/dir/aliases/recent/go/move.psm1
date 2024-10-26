@@ -1,22 +1,28 @@
 function Move-ToRecentLocationByNumber {
 	Param(
 		[ValidateScript({
-			($_ -ge 1) -and ($_ -le (Get-RecentLocations).Count)
+			($_ -ge 0) -and ($_ -le (Get-RecentLocations).Count)
 		})]
 		[Parameter(Mandatory=$true)][int] $no
 	)
 
-	Process { Move-ToLocationFromList (Get-RecentLocations) ($no - 1) }
+	Process {
+		if ($no -eq 0) {
+			return Register-PackagedLocation
+		} else {
+			return Move-ToLocationFromList (Get-RecentLocations) $no
+		}
+	}
 }
 
 function Move-ToRecentLocations {
 	Begin { $recent = Get-RecentLocations }
 
 	Process {
-		if ($recent.Count -eq 0) {
+		if ($recent.Count -le 1) {
 			return Get-NoLocations
 		}
-		if ($recent.Count -eq 1) {
+		if ($recent.Count -eq 2) {
 			return Move-ToRecentLocationByNumber 1
 		}
 		Write-RecentLocations

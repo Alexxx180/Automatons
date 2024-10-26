@@ -7,9 +7,9 @@ function Assert-Locations {
 
 	Process {
 		$dirs = Get-PackagedLocations
-		$dir.exists = $loctype.Invoke($dirs[$i], $location)
 		$dir.index -= 1
-		return (-not $dir.exists) -and ($dir.index -ge 0)
+		$dir.exists = $loctype.Invoke($dirs[$dir.index], $location)
+		return (-not $dir.exists) -and ($dir.index -gt 0)
 	}
 }
 

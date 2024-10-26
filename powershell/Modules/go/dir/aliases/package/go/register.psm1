@@ -1,24 +1,35 @@
+function Search-ForAlias {
+	Param([string] $location)
+
+	Process {
+		[HashTable] $searcher = Get-AliasSearcher $location
+		Find-AliasWithinPath $searcher
+		while ($searcher.index -ne -1) {
+			Find-AliasWithinPath $searcher '.'
+		}
+		return $searcher.alias.ToString()
+	}
+}
+
 function Register-PackagedLocation {
 	Param([Parameter(Mandatory=$true)][string] $location)
 
-	Begin {
-		$assert = Get-AssertLocationTypes
-		[HashTable] $dir = @{ exists = $false; index = (Get-PackagedLocations).Length }
-	}
+	#Begin {
+		#$assert = Get-AssertLocationTypes
+		#[HashTable] $dir = @{ exists = $false; index = (Get-PackagedLocations).Length }
+	#}
 
 	Process {
-		if (-not (Test-Path $location -PathType Container)) { return }
-
-		[HashTable] $searcher = Get-AliasSearcher $location
-
-		Find-AliasWithinPath $searcher
-		while ($searcher.index -eq -1) {
-			Find-AliasWithinPath $searcher '.'
+		if (-not (Test-Path $location -PathType Container)) {
+			return Get-NoLocations
 		}
 
-		$script:dir.Add(@{
-			alias = $searcher.alias.ToString()
+		[HashTable] $next = @{
+			alias = Search-ForAlias $location
 			location = $location
-		})
+		}
+
+		$script:dir.Add($next)
+		return "New location '$($next.alias)' - '$($next.location)'"
 	}
 }

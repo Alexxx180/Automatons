@@ -25,6 +25,21 @@ function Step-FirstBranchItem {
 	}
 }
 
+<#
+.SYNOPSIS
+	Move parent to next location
+.DESCRIPTION
+	Go from parent folder to location containing next pattern
+.PARAMETER Alias
+	Pattern to compare parent folder
+.EXAMPLE
+	C:\Test\Image> Use-LocationBranch te
+	Stay in the same location or get list of next if found any
+	because 'te' pattern will match 'Test' parent
+.NOTES
+	Author: Tatarintsev Aleksander
+	Date:   October 27, 2024
+#>
 function Use-LocationBranch {
 	Param(
 		[ValidateScript({

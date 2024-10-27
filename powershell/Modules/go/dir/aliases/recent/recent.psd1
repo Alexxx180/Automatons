@@ -14,8 +14,9 @@
 		'go/add/new.psm1'
 		'go/add/register.psm1'
 		'go/add/edit.psm1'
+		'go/move/move.psm1'
 		'go/move/select.psm1'
-		'go/move/switch.psm1'
+		'go/move/pop.psm1'
 		'storage/branch.psm1'
 	)
 }

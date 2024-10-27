@@ -3,12 +3,12 @@ function Edit-RecentLocations {
 
 	Process {
 		[string] $nothing = Get-NoLocations
-		[string] $switched = Switch-RecentLocations
+		$result = Pop-RecentLocation
 
-		if ($switched -eq $nothing) {
+		if ($result -eq $nothing) {
 			return New-RecentLocation $location
 		}
 
-		return $switched
+		return $result
 	}
 }

@@ -1,12 +1,8 @@
-function Grant-RecentLocations {
-	$script:rows = Get-RecentLocationKeys
-	return $script:rows
-}
-
 function Move-ToRecentLocation {
 	Process {
+		[string] $row = Get-RecentLocationKeys
 		[HashTable] $recent = Get-RecentLocations
-		return Move-ToLocationRow $recent $script:rows
+		return Move-ToLocationRow $recent $row
 	}
 }
 
@@ -19,7 +15,8 @@ function Select-RecentLocation {
 	)
 
 	Process {
+		[string[]] $rows = Get-RecentLocationKeys
 		[HashTable] $recent = Get-RecentLocations
-		return Move-ToLocationRow $recent $script:rows[$no - 1]
+		return Move-ToLocationRow $recent $rows[$no - 1]
 	}
 }

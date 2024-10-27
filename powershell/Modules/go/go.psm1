@@ -1,11 +1,12 @@
 function Open-Location {
-	Param([Parameter(Mandatory=$true)][string] $command)
+	Param([Parameter(Mandatory=$true)][string] $location)
 
 	Process {
-		if ($command[0] -eq ':') {
-			return Switch-LocationCommands $command.Substring(1, 2)
-		}
-		return Move-ToPackagedLocation $command
+		if ($args.Count -gt 1) { $location = $args -join ' ' }
+
+		if ($location -eq '.') { $location = Get-Location }
+
+		return Move-ToPackagedLocation $location
 	}
 }
 

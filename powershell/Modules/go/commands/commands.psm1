@@ -8,15 +8,10 @@ function Get-LocationCommands { return $script:commands }
 	all = @{
 		r = { return Clear-PackagedLocations }
 		l = { return Write-PackagedLocations }
+		i = { return Import-LocationsFromConfig }
 	}
 	selection = @{
-		d = {
-			Param([string] $alias)
-			Invoke-LocationOperation (Get-DropLocations) $alias
-		}
-		y = {
-			Param([string] $alias)
-			Invoke-LocationOperation (Get-YankLocations) $alias
-		}
+		d = { Param([string] $alias) Set-DropLocation $alias }
+		y = { Param([string] $alias) Get-YankLocation $alias }
 	}
 }

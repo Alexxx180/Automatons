@@ -1,15 +1,16 @@
-function Get-YankLocations { return $script:operations }
+function Get-YankLocation([string] $selection) {
+	Begin { $locations = Get-PackagedLocations }
 
-$script:operations = @{
-	directory = {
-		Param($dirs, [int] $no)
-		if ($no -eq 0) {
-			[string] $dir = (Get-Location).Drive.Root
-		} else {
-			[string] $dir = $dirs[$no]
+	Process {
+		if (-not $locations.Contains($selection)) {
+			return Get-NoLocations
 		}
-		Set-Clipboard $dir
+		if ($selection -eq 'root') {
+			[string] $location = (Get-Location).Drive.Root
+		} else {
+			[string] $location = $locations[$selection]
+		}
+		Set-Clipboard $location
 		return 'Copied to clipboard.'
 	}
-	recent = Get-NoRecentFeedback
 }

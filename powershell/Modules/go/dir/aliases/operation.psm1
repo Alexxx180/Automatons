@@ -3,7 +3,7 @@ function Save-RecentLocation {
 
 	Process {
 		if ($operations.recent.save) {
-			Register-RecentLocation $dir.key $location
+			Register-RecentLocation $key $location
 		}
 	}
 }
@@ -20,13 +20,14 @@ function Invoke-LocationOperation {
 	}
 
 	Process {
+		if ($operations.recent.save) { Clear-RecentLocations }
+
 		if ($locations.Contains($location)) {
+			Save-RecentLocation $operations $location $location
 			return Move-ToLocationRow $locations $location
 		}
 
 		$location = Clear-LocationPath $location
-
-		if ($operations.recent.save) { Clear-RecentLocations }
 
 		while (Assert-Locations $dir $location) {
 			Save-RecentLocation $operations $dir.key $location

@@ -6,7 +6,7 @@ function Write-PackagedLocations {
 
 	Process {
 		foreach ($key in $locations.Keys) {
-			$dirs.Append($key).Append("`t")
+			$dirs.Append($key).Append("`t") > $null
 		}
 	}
 

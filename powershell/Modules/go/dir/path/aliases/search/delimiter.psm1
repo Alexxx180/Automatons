@@ -27,10 +27,18 @@ function Step-Alias {
 }
 
 function Find-PathDelimiter {
-	Param(
-		[Parameter(Mandatory=$true)][string] $location,
-		[Parameter(Mandatory=$true)][int] $end
-	)
+	Param([string] $location, [int] $end)
 
 	Process { return $location.LastIndexOf('/', $end - 1) }
+}
+
+function Search-PathDelimiter {
+	Param(
+		[Parameter(Mandatory=$true)][HashTable] $searcher,
+		[Parameter(Mandatory=$true)][int] $length
+	)
+
+	Process {
+		$searcher.index = Find-PathDelimiter $searcher.location $length
+	}
 }

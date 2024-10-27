@@ -1,12 +1,15 @@
-function Get-DropLocations { return $script:operations }
+function Set-DropLocation([string] $selection) {
+	Begin { $locations = Get-PackagedLocations }
 
-$script:operations = @{
-	directory = {
-		Param($dirs, [int] $no)
-		if ($no -eq 0) { return "Can't remove root location" }
-		[HashTable] $dir = $dirs[$no]
-		$dirs.Remove($dir)
-		return "Removed '$($dir.alias)' - '$($dir.location)'"
+	Process {
+		if ($selection -eq 'root') {
+			return "Can't remove root location"
+		}
+		if (-not $locations.Contains($selection)) {
+			return Get-NoLocations
+		}
+		[string] $location = $locations[$selection]
+		$locations.Remove($selection)
+		return "Removed '$selection' - '$location'"
 	}
-	recent = Get-NoRecentFeedback
 }

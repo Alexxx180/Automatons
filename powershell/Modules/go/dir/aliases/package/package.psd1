@@ -1,6 +1,6 @@
 @{
 	ModuleVersion = '1.0'
-	GUID = 'c25afe53-286f-4e81-9266-31a605a41854'
+	GUID = '33f80221-4272-4f9a-ac30-afe5773b3c8d'
 	Author = 'Tatarintsev Aleksandr'
 	CompanyName = 'EX-Digits'
 	Copyright = '(c) 2024 Tatarintsev Aleksandr. All rights reserved.'

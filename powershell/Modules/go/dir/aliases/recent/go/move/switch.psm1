@@ -1,24 +1,21 @@
-function Switch-RecentLocations {
+function Pop-RecentLocation {
 	Param([switch] $new)
 
-	Begin { $recent = Get-RecentLocations }
+	Begin {
+		$recent = Get-RecentLocations
+		$count = $recent.Count
+	}
 
 	Process {
 		if ($new) { return New-RecentLocation }
 
-		if ($recent.Count -eq 0) {
-			return Get-NoLocations
-		}
+		if ($count -eq 0) { return Get-NoLocations }
 
-		$rows = Grant-RecentLocations
+		if ($count -eq 1) { return Move-ToRecentLocation }
 
-		if ($recent.Count -eq 1) {
-			return Move-ToRecentLocation
-		}
-
-		Write-RecentLocations $rows
-		return Select-RecentLocation
+		return Write-RecentLocations
 	}
 }
 
-Set-Alias -Name gr -Value Switch-RecentLocations -Scope Global
+Set-Alias -Name gr -Value Pop-RecentLocation -Scope Global
+Set-Alias -Name gf -Value Select-RecentLocation -Scope Global

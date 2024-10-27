@@ -26,6 +26,26 @@ function Group-SourceCommand {
 	}
 }
 
+<#
+.SYNOPSIS
+	Perform navigation command
+.DESCRIPTION
+	Perform simple navigation command to clear packages, get
+	help message, yank location, get list of all packages and so on
+.PARAMETER Command
+	Command to be executed. Use 'h' as parameter to get full list
+.PARAMETER Selection
+	Used to specify alias in the selection commands group
+.EXAMPLE
+	C:\Test\Image> Switch-LocationCommands h
+	Displays command hint
+.EXAMPLE
+	C:\Test\Image> Switch-LocationCommands l
+	Displays list of saved packages
+.NOTES
+	Author: Tatarintsev Aleksander
+	Date:   October 27, 2024
+#>
 function Switch-LocationCommands {
 	Param([Parameter(Mandatory=$true)][string] $command, [string] $selection)
 

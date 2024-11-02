@@ -9,6 +9,10 @@ function Get-LocationCommands { return $script:commands }
 		r = { return Clear-PackagedLocations }
 		l = { return Write-PackagedLocations }
 		i = { return Import-LocationsFromConfig }
+		'.' = {
+			Set-Clipboard (Get-Location).Path
+			return 'Copied to clipboard.'
+		}
 	}
 	selection = @{
 		d = { Param([string] $alias) Set-DropLocation $alias }

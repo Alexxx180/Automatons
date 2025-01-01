@@ -40,9 +40,11 @@ function Import-LocationsFromConfig {
 			Set-PackagedLocationsConfig
 			if (-not $script:config) { return }
 		}
+
 		if ($script:config.Contains('.')) {
 			Import-PackagedLocations
 		}
+
 		if ($script:config.Contains('..')) {
 			Import-AliasedLocations
 		}

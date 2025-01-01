@@ -1,7 +1,8 @@
 function Assert-Locations {
 	Param(
 		[Parameter(Mandatory=$true)][HashTable] $dir,
-		[Parameter(Mandatory=$true)][string] $location
+		[Parameter(Mandatory=$true)][string] $location,
+		[switch] $nostrict
 	)
 
 	Begin { [HashTable] $locations = Get-PackagedLocations }
@@ -9,7 +10,8 @@ function Assert-Locations {
 	Process {
 		$dir.index -= 1
 		$dir.key = $dir.keys[$dir.index]
-		$dir.exists = $locations[$dir.key] -eq $location
+		[string] $c = $locations[$dir.key]
+		$dir.exists = (($c -eq $location) -or $nostrict -and ($c -like "*$location*"))
 	}
 
 	End { return (-not $dir.exists) -and ($dir.index -gt 0) }

@@ -1,6 +1,8 @@
 function Get-YankRootLocation {
 	Param([string] $selection)
 
+	Begin { $locations = Get-PackagedLocations }
+
 	Process {
 		if ($selection -eq 'root') {
 			[string] $location = (Get-Location).Drive.Root
@@ -11,25 +13,32 @@ function Get-YankRootLocation {
 	}
 }
 
-function Get-YankLocation([string] $selection) {
+function Get-YankLocationString([string] $selection) {
 	Begin { $locations = Get-PackagedLocations }
 
 	Process {
 		if ($locations.Contains($selection)) {
-			[string] $location = Get-YankRootLocation $selection
+			return Get-YankRootLocation $selection
+		}
+		[HashTable] $dir = Copy-AssociateYankLocation $selection
+		if ($dir.exists) {
+			return $locations[$dir.keys[$dir.index]]
+		}
+		return ''
+	}
+}
+
+function Get-YankLocation([string] $selection) {
+	Process {
+		[string] $location = Get-YankLocationString $selection
+
+		if ($location -eq '') {
+			Write-Output "Something"
+			return Get-NoLocations
+		} else {
 			Set-Clipboard $location
 			return 'Copied to clipboard.'
 		}
-
-		[HashTable] $dir = Copy-AssociateYankLocation $selection
-		if ($dir.exists) {
-			Set-Clipboard $locations[$dir.keys[$dir.index]]
-			return 'Copied to clipboard.'
-		}
-
-		Write-Output "Something"
-
-		return Get-NoLocations
 	}
 }
 

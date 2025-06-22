@@ -11,7 +11,7 @@ function Complete-BranchPath {
 		while ($tree.item -and (-not $tree.branches)) {
 			$tree.path.Insert(0, '/').Insert(0, $tree.item.Name) > $null
 			$tree.item = $tree.item.Parent
-			$branches = Get-ResultBranches $tree
+			$tree.branches = Get-ResultBranches $tree
 		}
 	}
 }
@@ -19,9 +19,19 @@ function Complete-BranchPath {
 function Step-FirstBranchItem {
 	Param([HashTable] $tree)
 	Process {
-		$tree.path.Append($item.Name) > $null
+		$tree.path.Append($tree.item.Name) > $null
 		$tree.item = $tree.item.Parent
 		if ($tree.item) { $tree.branches = Get-ResultBranches $tree }
+	}
+}
+
+function Assert-AvailableBranchPath {
+	Param([HashTable] $tree)
+	Process {
+		$p = $tree.path.ToString()
+		$full = $tree.branches.FullName + $p.Substring($p.IndexOf('/'))
+		if (Test-Path $full) { return $full }
+		return $tree.branches.FullName
 	}
 }
 
@@ -60,7 +70,8 @@ function Use-LocationBranch {
 		if (-not $tree.branches) { return Get-NoLocations }
 
 		if ($tree.branches.Count -eq 1) {
-			Set-Location $tree.branches.FullName
+			[string] $path = Assert-AvailableBranchPath $tree
+			Set-Location $path
 		} else {
 			Mount-RecentBranches $tree
 			Write-RecentLocations
